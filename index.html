@@ -5,16 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>张三 · 个人主页 | Zhang San — Soochow University</title>
 
-<!-- MathJax for LaTeX -->
+<!-- MathJax for LaTeX (国内镜像) -->
 <script>
   MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
 </script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<script async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<!-- Fonts: 使用字节跳动静态资源库（国内可访问） -->
+<link href="https://fonts.font.im/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -33,11 +31,11 @@
     --rule-soft: #d9c9a8;
     --gold: #8a6a3a;           /* 泥金 */
 
-    --font-kai: 'Ma Shan Zheng', 'Noto Serif SC', serif;     /* 题字·书法 */
-    --font-song: 'Noto Serif SC', 'Songti SC', serif;        /* 宋体·正文 */
-    --font-xiaowei: 'ZCOOL XiaoWei', 'Noto Serif SC', serif; /* 小标题·古雅 */
-    --font-en: 'Cormorant Garamond', Georgia, serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --font-kai: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', '楷体', 'Noto Serif SC', serif;     /* 题字·书法 */
+    --font-song: 'Noto Serif SC', 'Songti SC', 'SimSun', '宋体', serif;                    /* 宋体·正文 */
+    --font-xiaowei: 'ZCOOL XiaoWei', 'STKaiti', 'KaiTi', 'Noto Serif SC', serif;           /* 小标题·古雅 */
+    --font-en: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
