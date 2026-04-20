@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张三 · 个人主页 | Zhang San — Soochow University</title>
+
+<!-- MathJax for LaTeX -->
+<script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* 宣纸色系 */
+    --paper: #f5ecd9;          /* 浅宣纸 */
+    --paper-deep: #ede0c2;     /* 老宣纸 */
+    --paper-stain: #e4d4b0;    /* 水渍深色 */
+    --ink: #1c1915;            /* 松烟墨 */
+    --ink-soft: #3a322a;       /* 淡墨 */
+    --ink-muted: #7a6a55;      /* 远墨 */
+    --ink-light: #a89578;      /* 浅灰褐 */
+    --vermilion: #9a2c1f;      /* 朱砂 */
+    --vermilion-soft: #b84333; /* 朱红 */
+    --seal-red: #a8342a;       /* 印章红 */
+    --rule: #c9b896;           /* 竹青栏线 */
+    --rule-soft: #d9c9a8;
+    --gold: #8a6a3a;           /* 泥金 */
+
+    --font-kai: 'Ma Shan Zheng', 'Noto Serif SC', serif;     /* 题字·书法 */
+    --font-song: 'Noto Serif SC', 'Songti SC', serif;        /* 宋体·正文 */
+    --font-xiaowei: 'ZCOOL XiaoWei', 'Noto Serif SC', serif; /* 小标题·古雅 */
+    --font-en: 'Cormorant Garamond', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-song);
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--ink);
+    background: var(--paper);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* 宣纸纹理 */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.35 0 0 0 0 0.22 0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.6;
+  }
+
+  /* 水渍斑点 - 固定于背景 */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background:
+      radial-gradient(ellipse 400px 300px at 10% 20%, rgba(154, 110, 60, 0.08), transparent 60%),
+      radial-gradient(ellipse 500px 400px at 90% 70%, rgba(120, 90, 50, 0.06), transparent 55%),
+      radial-gradient(ellipse 300px 200px at 70% 15%, rgba(168, 52, 42, 0.04), transparent 65%);
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============ 顶部标题区 ============ */
+  header {
+    padding: 80px 0 60px;
+    position: relative;
+  }
+
+  .header-layout {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 48px;
+    align-items: start;
+  }
+
+  /* 竖排中文姓名 */
+  .name-vertical {
+    writing-mode: vertical-rl;
+    font-family: var(--font-kai);
+    font-size: 58px;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    line-height: 1.1;
+    padding: 12px 8px;
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .name-vertical::before,
+  .name-vertical::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--rule);
+  }
+  .name-vertical::before { top: 0; }
+  .name-vertical::after { bottom: 0; }
+
+  /* 中间介绍 */
+  .intro-center {
+    padding-top: 14px;
+  }
+
+  .intro-en-name {
+    font-family: var(--font-en);
+    font-size: 28px;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 14px;
+  }
+
+  .intro-line {
+    width: 60px;
+    height: 1px;
+    background: var(--vermilion);
+    margin-bottom: 18px;
+  }
+
+  .intro-title {
+    font-family: var(--font-xiaowei);
+    font-size: 18px;
+    color: var(--ink-soft);
+    line-height: 2;
+    letter-spacing: 0.05em;
+  }
+
+  .intro-title .label {
+    color: var(--vermilion);
+    margin-right: 10px;
+    font-family: var(--font-song);
+    font-size: 14px;
+  }
+
+  /* 右侧印章 */
+  .seal {
+    width: 80px;
+    height: 80px;
+    background: var(--seal-red);
+    position: relative;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper);
+    font-family: var(--font-kai);
+    font-size: 26px;
+    letter-spacing: 0.05em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transform: rotate(-3deg);
+    writing-mode: vertical-rl;
+    line-height: 1;
+    padding: 6px;
+    text-align: center;
+  }
+
+  /* 印章的颗粒/残缺感 */
+  .seal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 25% 30%, transparent 1.5px, rgba(245,236,217,0.4) 2px, transparent 3px),
+      radial-gradient(circle at 75% 60%, transparent 1px, rgba(245,236,217,0.3) 1.5px, transparent 2.5px),
+      radial-gradient(circle at 50% 85%, transparent 1px, rgba(245,236,217,0.25) 1.5px, transparent 2.5px),
+      radial-gradient(circle at 15% 75%, transparent 0.5px, rgba(245,236,217,0.35) 1px, transparent 2px);
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  .seal::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border: 1.5px solid rgba(245,236,217,0.5);
+    pointer-events: none;
+  }
+
+  /* ============ 导航 ============ */
+  nav {
+    padding: 24px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px double var(--rule);
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    font-family: var(--font-xiaowei);
+    font-size: 17px;
+    letter-spacing: 0.3em;
+    position: relative;
+  }
+
+  /* 导航两端的装饰 */
+  nav::before, nav::after {
+    content: "❖";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--vermilion);
+    font-size: 12px;
+    opacity: 0.6;
+  }
+  nav::before { left: 20px; }
+  nav::after { right: 20px; }
+
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+    padding: 4px 0;
+  }
+
+  nav a:hover { color: var(--vermilion); }
+
+  nav a::after {
+    content: "";
+    position: absolute;
+    left: 50%; right: 50%; bottom: -2px;
+    height: 1px;
+    background: var(--vermilion);
+    transition: all 0.3s ease;
+  }
+  nav a:hover::after { left: 0; right: 0; }
+
+  /* ============ 章节 ============ */
+  section {
+    padding: 72px 0;
+    position: relative;
+  }
+
+  section + section {
+    border-top: 1px dashed var(--rule-soft);
+  }
+
+  /* 章节标题 */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .section-title .cn {
+    font-family: var(--font-kai);
+    font-size: 36px;
+    color: var(--ink);
+    letter-spacing: 0.15em;
+  }
+
+  .section-title .en {
+    font-family: var(--font-en);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-light);
+    letter-spacing: 0.1em;
+    padding-top: 12px;
+  }
+
+  .section-title .ornament {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--rule) 0%, transparent 100%);
+    margin-top: 18px;
+    position: relative;
+  }
+
+  .section-title .ornament::before {
+    content: "◈";
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--vermilion);
+    font-size: 10px;
+    background: var(--paper);
+    padding: 0 4px;
+  }
+
+  /* 正文段落 */
+  p {
+    margin-bottom: 18px;
+    color: var(--ink-soft);
+    text-align: justify;
+    text-indent: 2em;
+  }
+  p:last-child { margin-bottom: 0; }
+  p.no-indent { text-indent: 0; }
+
+  em { font-style: normal; color: var(--ink); border-bottom: 1px dotted var(--vermilion); padding-bottom: 1px; }
+  strong { font-weight: 600; color: var(--ink); }
+
+  a.inline-link {
+    color: var(--vermilion);
+    text-decoration: none;
+    border-bottom: 1px solid var(--vermilion-soft);
+    transition: all 0.2s;
+    padding-bottom: 1px;
+  }
+  a.inline-link:hover { background: rgba(154, 44, 31, 0.08); }
+
+  /* ============ 卷首语 (About) ============ */
+  .about-preamble {
+    font-family: var(--font-kai);
+    font-size: 22px;
+    color: var(--ink);
+    text-align: center;
+    line-height: 2;
+    margin-bottom: 36px;
+    letter-spacing: 0.2em;
+    position: relative;
+  }
+
+  .about-preamble::before, .about-preamble::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--rule);
+    margin: 12px auto;
+  }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 14px 28px;
+    margin-top: 32px;
+    padding: 24px 28px;
+    background: rgba(237, 224, 194, 0.5);
+    border-left: 3px solid var(--vermilion);
+  }
+
+  .fact-grid dt {
+    font-family: var(--font-xiaowei);
+    color: var(--vermilion);
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    padding-top: 2px;
+  }
+
+  .fact-grid dd {
+    color: var(--ink-soft);
+    font-size: 16px;
+  }
+
+  /* ============ 笔记 ============ */
+  .notes-intro {
+    font-style: italic;
+    color: var(--ink-muted);
+    text-indent: 0;
+    text-align: center;
+    font-family: var(--font-xiaowei);
+    margin-bottom: 36px;
+  }
+
+  .note-item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px dotted var(--rule);
+    align-items: baseline;
+    transition: background 0.2s;
+  }
+  .note-item:hover { background: rgba(237, 224, 194, 0.35); }
+  .note-item:last-child { border-bottom: none; }
+
+  .note-date {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+  }
+
+  .note-content .note-title {
+    font-family: var(--font-xiaowei);
+    font-size: 19px;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: 0.03em;
+  }
+  .note-content .note-title a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .note-content .note-title a:hover { color: var(--vermilion); }
+
+  .note-content .note-sub {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  .note-tag {
+    font-family: var(--font-xiaowei);
+    font-size: 13px;
+    color: var(--vermilion);
+    padding: 3px 10px;
+    border: 1px solid var(--vermilion-soft);
+    border-radius: 2px;
+    white-space: nowrap;
+    letter-spacing: 0.1em;
+  }
+
+  /* ============ CV ============ */
+  .cv-card {
+    background: linear-gradient(135deg, var(--paper-deep) 0%, var(--paper) 100%);
+    padding: 36px 40px;
+    position: relative;
+    border: 1px solid var(--rule);
+    margin-top: 12px;
+  }
+
+  /* CV 卡片的四角装饰 */
+  .cv-card::before, .cv-card::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: var(--vermilion);
+    border-style: solid;
+  }
+  .cv-card::before {
+    top: 8px; left: 8px;
+    border-width: 1px 0 0 1px;
+  }
+  .cv-card::after {
+    bottom: 8px; right: 8px;
+    border-width: 0 1px 1px 0;
+  }
+
+  .cv-label {
+    font-family: var(--font-xiaowei);
+    font-size: 14px;
+    color: var(--vermilion);
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
+  }
+
+  .cv-title {
+    font-family: var(--font-kai);
+    font-size: 28px;
+    color: var(--ink);
+    margin-bottom: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  .cv-desc {
+    color: var(--ink-soft);
+    text-indent: 0;
+    font-size: 15px;
+    margin-bottom: 22px;
+    line-height: 1.8;
+  }
+
+  .cv-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: var(--font-xiaowei);
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    transition: all 0.3s;
+    border: 1px solid var(--ink);
+  }
+
+  .cv-download:hover {
+    background: var(--vermilion);
+    border-color: var(--vermilion);
+    transform: translateY(-1px);
+  }
+
+  .cv-download .arrow {
+    font-family: var(--font-en);
+    font-size: 18px;
+  }
+
+  .cv-meta {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--ink-light);
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ 联系方式 ============ */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 40px;
+    margin-top: 8px;
+  }
+
+  .contact-item {
+    padding: 20px 24px;
+    border-left: 2px solid var(--rule);
+    transition: all 0.25s;
+  }
+  .contact-item:hover {
+    border-left-color: var(--vermilion);
+    background: rgba(237, 224, 194, 0.35);
+  }
+
+  .contact-label {
+    font-family: var(--font-xiaowei);
+    font-size: 13px;
+    color: var(--vermilion);
+    letter-spacing: 0.25em;
+    margin-bottom: 6px;
+  }
+
+  .contact-value {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--ink);
+    word-break: break-all;
+  }
+
+  .contact-value.prose {
+    font-family: var(--font-song);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .contact-value a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--rule);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .contact-value a:hover {
+    color: var(--vermilion);
+    border-bottom-color: var(--vermilion);
+  }
+
+  /* ============ 页脚 ============ */
+  footer {
+    padding: 60px 0 80px;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+    margin-top: 32px;
+  }
+
+  .footer-mark {
+    font-family: var(--font-kai);
+    font-size: 22px;
+    color: var(--rule);
+    letter-spacing: 0.8em;
+    margin-bottom: 20px;
+    padding-right: 0.8em; /* 视觉居中 */
+  }
+
+  .footer-quote {
+    font-family: var(--font-xiaowei);
+    font-size: 15px;
+    color: var(--ink-muted);
+    line-height: 2;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+
+  .footer-quote .attr {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+
+  .footer-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+    margin-top: 24px;
+  }
+
+  /* ============ 入场动画 ============ */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fade 1s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+  }
+  @keyframes fade { to { opacity: 1; transform: translateY(0); } }
+
+  header .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  nav.fade-in { animation-delay: 0.35s; }
+  #about.fade-in { animation-delay: 0.5s; }
+
+  /* ============ 响应式 ============ */
+  @media (max-width: 720px) {
+    body { font-size: 16px; }
+    .container { padding: 0 22px; }
+    header { padding: 50px 0 40px; }
+    .header-layout {
+      grid-template-columns: auto 1fr;
+      gap: 24px;
+    }
+    .name-vertical { font-size: 42px; }
+    .intro-en-name { font-size: 22px; }
+    .seal {
+      grid-column: 1 / -1;
+      justify-self: end;
+      margin-top: -20px;
+    }
+    nav {
+      gap: 24px;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      padding: 18px 0;
+    }
+    nav::before, nav::after { display: none; }
+    section { padding: 48px 0; }
+    .section-title .cn { font-size: 28px; }
+    .section-title .en { font-size: 14px; }
+    .about-preamble { font-size: 18px; }
+    .fact-grid { grid-template-columns: 1fr; gap: 4px 0; padding: 20px; }
+    .fact-grid dt { margin-top: 10px; }
+    .note-item { grid-template-columns: 1fr; gap: 4px; padding: 18px 0; }
+    .note-tag { justify-self: start; margin-top: 6px; }
+    .cv-card { padding: 28px 22px; }
+    .cv-title { font-size: 22px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 16px; }
+    p { text-indent: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============ 顶部 ============ -->
+  <header>
+    <div class="header-layout fade-in">
+      <!-- 竖排中文姓名 -->
+      <div class="name-vertical">张&nbsp;三</div>
+
+      <!-- 中间：英文名 + 头衔 -->
+      <div class="intro-center">
+        <div class="intro-en-name">Zhang&nbsp;San</div>
+        <div class="intro-line"></div>
+        <div class="intro-title">
+          <div><span class="label">治学</span>数学 · 纯粹数学方向</div>
+          <div><span class="label">就读</span>苏州大学 数学科学学院</div>
+          <div><span class="label">学位</span>硕士研究生 在读</div>
+        </div>
+      </div>
+
+      <!-- 印章 -->
+      <div class="seal">张三<br>之印</div>
+    </div>
+  </header>
+
+  <!-- ============ 导航 ============ -->
+  <nav class="fade-in">
+    <a href="#about">自叙</a>
+    <a href="#notes">随笔</a>
+    <a href="#cv">履历</a>
+    <a href="#contact">鸿雁</a>
+  </nav>
+
+  <!-- ============ 自叙 About ============ -->
+  <section id="about" class="fade-in">
+    <div class="section-title">
+      <span class="cn">自&nbsp;叙</span>
+      <span class="en">About</span>
+      <span class="ornament"></span>
+    </div>
+
+    <div class="about-preamble">
+      读书如稽古&nbsp;&nbsp;数理似观山
+    </div>
+
+    <p>
+      我是张三，现就读于<em>苏州大学数学科学学院</em>，师从<em>某某教授</em>，攻读硕士学位。本科毕业于<em>某某大学</em>数学系（2023），
+      自幼喜爱数学之美——从欧几里得的公理之严到现代代数几何的结构之奇，一以贯之者，唯「简洁之中见深远」一念耳。
+    </p>
+
+    <p>
+      目前研究兴趣集中于<em>代数几何</em>与<em>表示论</em>的交界：尤其关注 derived categories 与 moduli spaces 的结构性质，
+      以及其中蕴含的对称与分类问题。公式 $D^b(\mathrm{Coh}\,X)$ 之于我，如同一幅未完的山水——
+      每一次 Fourier–Mukai 变换都是一次移步换景。
+    </p>
+
+    <p>
+      读书之余，喜听古琴，好围棋，尝练小楷。窃以为数学与中国传统之学问相通：皆在"守约"而非"炫博"——
+      一行方程之内，可藏万千气象。此主页即为留影记事之所，不求博观，但愿诚以待之。
+    </p>
+
+    <dl class="fact-grid">
+      <dt>籍贯</dt>
+      <dd>江苏 · 某某</dd>
+
+      <dt>方向</dt>
+      <dd>代数几何 / 表示论 / 同调代数</dd>
+
+      <dt>语言</dt>
+      <dd>中文（母语）· English（fluent）· 一点法语（日渐生疏）</dd>
+
+      <dt>闲趣</dt>
+      <dd>古琴 · 围棋 · 金石篆刻 · 江南园林</dd>
+    </dl>
+  </section>
+
+  <!-- ============ 随笔 Notes ============ -->
+  <section id="notes">
+    <div class="section-title">
+      <span class="cn">随&nbsp;笔</span>
+      <span class="en">Notes</span>
+      <span class="ornament"></span>
+    </div>
+
+    <p class="notes-intro">
+      — 治学札记若干，为自用之资，亦与同道共勉 —
+    </p>
+
+    <div class="note-item">
+      <div class="note-date">乙巳·仲秋<br>2025.09</div>
+      <div class="note-content">
+        <div class="note-title"><a href="#">Étale 上同调浅说</a></div>
+        <div class="note-sub">约三十页，为讨论班所作。详举例多而证明略，意在建立直观。</div>
+      </div>
+      <div class="note-tag">代数几何</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-date">乙巳·孟夏<br>2025.05</div>
+      <div class="note-content">
+        <div class="note-title"><a href="#">K3 曲面上的稳定性条件 · 报告稿</a></div>
+        <div class="note-sub">苏州大学研究生讨论班报告。含 slides 与补充笔记。</div>
+      </div>
+      <div class="note-tag">讨论班</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-date">甲辰·季冬<br>2024.11</div>
+      <div class="note-content">
+        <div class="note-title"><a href="#">Serre&nbsp;之&nbsp;GAGA&nbsp;读书笔记</a></div>
+        <div class="note-sub">精读 Serre 1956 年原文所得。约十二页，含自己补出的若干细节。</div>
+      </div>
+      <div class="note-tag">读书</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-date">甲辰·仲夏<br>2024.06</div>
+      <div class="note-content">
+        <div class="note-title"><a href="#">谱序列习题辑要</a></div>
+        <div class="note-sub">McCleary 与 Weibel 两书中习题的整理，附多数解答。</div>
+      </div>
+      <div class="note-tag">习题</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-date">甲辰·孟春<br>2024.03</div>
+      <div class="note-content">
+        <div class="note-title"><a href="#">关于 $\mathrm{Ext}^1$ 的几种理解方式</a></div>
+        <div class="note-sub">短札一篇，试将同调代数、层论、扩张类三条路径会通。</div>
+      </div>
+      <div class="note-tag">同调代数</div>
+    </div>
+  </section>
+
+  <!-- ============ 履历 CV ============ -->
+  <section id="cv">
+    <div class="section-title">
+      <span class="cn">履&nbsp;历</span>
+      <span class="en">Curriculum&nbsp;Vitae</span>
+      <span class="ornament"></span>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-label">学 术 简 历</div>
+      <div class="cv-title">完整 CV 下载</div>
+      <p class="cv-desc">
+        内含教育经历、获奖记录、会议报告、语言与技能、以及课程列表。若有需要旧版或中英文对照版，敬请来信。
+      </p>
+      <a href="#" class="cv-download" download>
+        下载 PDF <span class="arrow">↓</span>
+      </a>
+      <div class="cv-meta">
+        CV_ZhangSan_2026-04.pdf &middot; 最后更新：丙午 · 四月（2026.04）
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 鸿雁 Contact ============ -->
+  <section id="contact">
+    <div class="section-title">
+      <span class="cn">鸿&nbsp;雁</span>
+      <span class="en">Contact</span>
+      <span class="ornament"></span>
+    </div>
+
+    <p class="no-indent" style="text-align:center; color: var(--ink-muted); font-family: var(--font-xiaowei); margin-bottom: 28px;">
+      书不尽言，言不尽意。若蒙不弃，欢迎来信。
+    </p>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-label">电 邮</div>
+        <div class="contact-value">zhangsan [at] stu.suda.edu.cn</div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-label">办 公</div>
+        <div class="contact-value prose">
+          苏州市姑苏区十梓街 1 号<br>
+          苏州大学 数学楼 XXX 室
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-label">ORCID</div>
+        <div class="contact-value"><a href="#">0000-0000-0000-0000</a></div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value"><a href="#">github.com/zhangsan</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 页脚 ============ -->
+  <footer>
+    <div class="footer-mark">· 止 ·</div>
+    <div class="footer-quote">
+      &ldquo; 数学乃是将不同之物赋以相同之名的艺术 &rdquo;
+      <span class="attr">— 亨利·庞加莱</span>
+    </div>
+    <div class="footer-meta">
+      © 2026 &nbsp;Zhang San &nbsp;·&nbsp; Last updated 丙午年四月
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
